@@ -8,6 +8,7 @@ REPO=https://github.com/Musasteel/sukoon-privacy
 
 echo "==> Installing helper packages (sudo password may be asked)..."
 sudo apt-get install -y playerctl brightnessctl pamixer fonts-font-awesome curl git
+fc-cache -f > /dev/null 2>&1 || true
 
 echo "==> Fetching sidebar config..."
 tmp=$(mktemp -d)
