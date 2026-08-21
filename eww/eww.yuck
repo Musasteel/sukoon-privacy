@@ -1,0 +1,128 @@
+;; Sukoon sidebar — Ubuntu 24.04 / X11 (GNOME)
+;; Open with: eww open sidebar
+
+(defpoll sys :interval "2s"
+  :initial '{"vol":50,"bri":50,"bat":100,"disk":0,"mem":0,"temp":0,"wifi":"","bt":"no","prof":"balanced","dark":true}'
+  "./scripts/status.sh")
+
+(defpoll music :interval "2s"
+  :initial '{"status":"Stopped","title":"Nothing playing","artist":"","art":"","pvol":100}'
+  "./scripts/music.sh")
+
+(defwindow sidebar
+  :monitor 0
+  :geometry (geometry :x "16px" :y "16px" :width "360px" :height "94%" :anchor "top right")
+  :wm-ignore true
+  (sidebar))
+
+(defwidget sidebar []
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 14
+    (power-row)
+    (quick-settings)
+    (sliders)
+    (sys-bars)
+    (music-card)
+    (notifs)))
+
+;; ── top row: settings / lock / logout / power ──────────────────────
+(defwidget power-row []
+  (box :class "card" :orientation "h" :space-evenly true :spacing 10
+    (button :class "circle icon" :onclick "gnome-control-center > /dev/null 2>&1 &" "")
+    (button :class "circle icon" :onclick "loginctl lock-session" "")
+    (button :class "circle icon" :onclick "gnome-session-quit --logout --no-prompt" "")
+    (button :class "circle icon" :onclick "gnome-session-quit --power-off" "")))
+
+;; ── quick settings chips ───────────────────────────────────────────
+(defwidget quick-settings []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "h" :space-evenly true :spacing 10
+      (button :class {sys.wifi != "" ? "chip on" : "chip"} :onclick "./scripts/toggle.sh wifi"
+        (box :space-evenly false :spacing 8 :halign "center"
+          (label :class "icon" :text "")
+          (label :limit-width 11 :text {sys.wifi != "" ? sys.wifi : "Wi-Fi"})
+          (label :class "icon" :text "")))
+      (button :class {sys.bt == "yes" ? "chip on" : "chip"} :onclick "./scripts/toggle.sh bt"
+        (box :space-evenly false :spacing 8 :halign "center"
+          (label :class "icon" :text "")
+          (label :text "Bluetooth"))))
+    (box :orientation "h" :space-evenly true :spacing 10
+      (button :class "chip" :onclick "./scripts/toggle.sh profile"
+        (box :space-evenly false :spacing 8 :halign "center"
+          (label :class "icon" :text "")
+          (label :text {sys.prof})
+          (label :class "icon" :text "")))
+      (button :class "chip on" :onclick "gnome-extensions prefs gsconnect@andyholmes.github.io > /dev/null 2>&1 &"
+        (box :space-evenly false :spacing 8 :halign "center"
+          (label :class "icon" :text "")
+          (label :text "GSConnect")
+          (label :class "icon" :text ""))))
+    (box :orientation "h" :space-evenly true :spacing 10
+      (box :class "chip"
+        (box :space-evenly false :spacing 8 :halign "center"
+          (label :class "icon" :text "")
+          (label :text "${sys.bat}%")))
+      (button :class "chip icon" :onclick "brightnessctl set 100% > /dev/null" "")
+      (button :class "chip icon" :onclick "gnome-control-center > /dev/null 2>&1 &" "")
+      (button :class {sys.dark ? "chip on icon" : "chip icon"} :onclick "./scripts/toggle.sh dark" ""))))
+
+;; ── volume + brightness sliders ────────────────────────────────────
+(defwidget sliders []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 14
+    (box :orientation "h" :space-evenly false :spacing 12
+      (label :class "icon dim" :text "")
+      (scale :class "slider" :hexpand true :min 0 :max 101 :value {sys.vol}
+        :onchange "pamixer --set-volume {} 2>/dev/null || pactl set-sink-volume @DEFAULT_SINK@ {}%")
+      (button :class "icon dim" :onclick "gnome-control-center sound > /dev/null 2>&1 &" ""))
+    (box :orientation "h" :space-evenly false :spacing 12
+      (label :class "icon dim" :text "")
+      (scale :class "slider" :hexpand true :min 0 :max 101 :value {sys.bri}
+        :onchange "brightnessctl set {}% > /dev/null"))))
+
+;; ── system meters: battery / disk / memory / temp ──────────────────
+(defwidget bar-row [icon value]
+  (box :orientation "h" :space-evenly false :spacing 14
+    (label :class "icon dim meter-icon" :text icon)
+    (progress :class "meter" :hexpand true :valign "center" :value value)
+    (label :class "pct" :halign "end" :text "${value}%")))
+
+(defwidget sys-bars []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 16
+    (bar-row :icon "" :value {sys.bat})
+    (bar-row :icon "" :value {sys.disk})
+    (bar-row :icon "" :value {sys.mem})
+    (bar-row :icon "" :value {sys.temp})))
+
+;; ── media player (playerctl / MPRIS) ───────────────────────────────
+(defwidget music-card []
+  (box :class "card" :orientation "h" :space-evenly false :spacing 14
+    (box :class "art" :style "background-image: url('${music.art}');")
+    (box :orientation "v" :space-evenly false :spacing 10 :hexpand true :valign "center"
+      (box :orientation "h" :space-evenly true
+        (button :class "mbtn icon" :onclick "playerctl shuffle toggle" "")
+        (button :class "mbtn icon" :onclick "playerctl previous" "")
+        (button :class "mbtn icon" :onclick "playerctl play-pause"
+          {music.status == "Playing" ? "" : ""})
+        (button :class "mbtn icon" :onclick "playerctl next" "")
+        (button :class "mbtn icon" :onclick "playerctl loop track" ""))
+      (box :orientation "h" :space-evenly false :spacing 10
+        (label :class "icon dim" :text "")
+        (scale :class "slider" :hexpand true :min 0 :max 101 :value {music.pvol}
+          :onchange "./scripts/mvol.sh {}")))))
+
+;; ── notifications card ─────────────────────────────────────────────
+(defwidget notifs []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 12
+    (box :orientation "h"
+      (label :class "title" :halign "start" :hexpand true :text "Notifications")
+      (button :class "clear" :halign "end" :onclick "dunstctl history-clear 2>/dev/null" "Clear"))
+    (box :class "notif" :orientation "h" :space-evenly false :spacing 12
+      :visible {music.status != "Stopped"}
+      (box :class "art small" :style "background-image: url('${music.art}');")
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :halign "start" :class "n-title" :limit-width 28 :text {music.artist != "" ? music.artist : "Media"})
+        (label :halign "start" :class "n-body dim" :limit-width 36 :text {music.title})))
+    (box :class "notif" :orientation "h" :space-evenly false :spacing 12
+      (label :class "icon n-icon" :text "")
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :halign "start" :class "n-title" :text "Software Updates")
+        (label :halign "start" :class "n-body dim" :text "System packages are up to date.")))))

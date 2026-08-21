@@ -1,0 +1,96 @@
+* {
+  all: unset;
+  font-family: "Ubuntu", "Cantarell", sans-serif;
+  font-size: 14px;
+  color: #e9ebf4;
+}
+
+.sidebar { margin: 2px; }
+
+.card {
+  background-color: rgba(11, 13, 20, 0.96);
+  border-radius: 24px;
+  padding: 16px 18px;
+}
+
+.icon { font-family: "FontAwesome"; }
+.dim  { color: #9aa0b4; }
+.title { font-size: 16px; font-weight: 700; }
+
+.circle {
+  background-color: #191d29;
+  border-radius: 999px;
+  padding: 12px 0;
+  font-size: 16px;
+}
+.circle:hover { background-color: #252b3d; }
+
+.chip {
+  background-color: #191d29;
+  border-radius: 999px;
+  padding: 10px 14px;
+}
+.chip:hover { background-color: #252b3d; }
+.chip.on { background-color: #3d64f4; }
+.chip.on:hover { background-color: #5377f6; }
+.chip.on label { color: #ffffff; }
+
+.slider trough {
+  background-color: #262b3d;
+  border-radius: 999px;
+  min-height: 8px;
+}
+.slider highlight {
+  background-color: #c6cad8;
+  border-radius: 999px;
+}
+.slider slider {
+  background-color: #ffffff;
+  border-radius: 999px;
+  min-height: 18px;
+  min-width: 18px;
+}
+
+.meter trough {
+  background-color: #262b3d;
+  border-radius: 999px;
+  min-height: 12px;
+}
+.meter progress {
+  background-color: #3d64f4;
+  border-radius: 999px;
+  min-height: 12px;
+}
+
+.meter-icon { min-width: 24px; font-size: 16px; }
+.pct { min-width: 46px; color: #c9cddb; }
+
+.art {
+  background-size: cover;
+  background-position: center;
+  background-color: #191d29;
+  border-radius: 16px;
+  min-width: 64px;
+  min-height: 64px;
+}
+.art.small { min-width: 40px; min-height: 40px; border-radius: 12px; }
+
+.mbtn { font-size: 16px; padding: 6px; }
+.mbtn:hover { color: #ffffff; }
+
+.notif {
+  background-color: #161a26;
+  border-radius: 16px;
+  padding: 12px;
+}
+.n-title { font-weight: 700; }
+.n-body { font-size: 13px; }
+.n-icon {
+  background-color: #262b3d;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+.clear { color: #c9cddb; }
+.clear:hover { color: #ffffff; }
