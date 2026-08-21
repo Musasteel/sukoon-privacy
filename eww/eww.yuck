@@ -1,11 +1,11 @@
 ;; Sukoon sidebar — Ubuntu 24.04 / X11 (GNOME)
 ;; Open with: eww open sidebar
 
-(defpoll sys :interval "2s"
+(defpoll sys :interval "5s"
   :initial '{"vol":50,"bri":50,"bat":100,"disk":0,"mem":0,"temp":0,"wifi":"","bt":"no","prof":"balanced","dark":true}'
   "./scripts/status.sh")
 
-(defpoll music :interval "2s"
+(defpoll music :interval "3s"
   :initial '{"status":"Stopped","title":"Nothing playing","artist":"","art":"","pvol":100}'
   "./scripts/music.sh")
 
@@ -96,7 +96,7 @@
 ;; ── media player (playerctl / MPRIS) ───────────────────────────────
 (defwidget music-card []
   (box :class "card" :orientation "h" :space-evenly false :spacing 14
-    (box :class "art" :style "background-image: url('${music.art}');")
+    (box :class "art" :style {music.art != "" ? "background-image: url('${music.art}');" : ""})
     (box :orientation "v" :space-evenly false :spacing 10 :hexpand true :valign "center"
       (box :orientation "h" :space-evenly true
         (button :class "mbtn icon" :onclick "playerctl shuffle toggle" "")
@@ -118,7 +118,7 @@
       (button :class "clear" :halign "end" :onclick "dunstctl history-clear 2>/dev/null" "Clear"))
     (box :class "notif" :orientation "h" :space-evenly false :spacing 12
       :visible {music.status != "Stopped"}
-      (box :class "art small" :style "background-image: url('${music.art}');")
+      (box :class "art small" :style {music.art != "" ? "background-image: url('${music.art}');" : ""})
       (box :orientation "v" :space-evenly false :valign "center"
         (label :halign "start" :class "n-title" :limit-width 28 :text {music.artist != "" ? music.artist : "Media"})
         (label :halign "start" :class "n-body dim" :limit-width 36 :text {music.title})))
