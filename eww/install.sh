@@ -8,6 +8,7 @@ REPO=https://github.com/Musasteel/sukoon-privacy
 
 echo "==> Installing helper packages (sudo password may be asked)..."
 sudo apt-get install -y playerctl brightnessctl pamixer fonts-font-awesome curl git
+sudo apt-get install -y touchegg || echo "WARN: touchegg unavailable; trackpad gestures will not work"
 fc-cache -f > /dev/null 2>&1 || true
 
 echo "==> Fetching sidebar config..."
@@ -18,6 +19,19 @@ cp -r "$tmp/eww/." "$HOME/.config/eww/"
 rm -f "$HOME/.config/eww/install.sh"
 chmod +x "$HOME/.config/eww/scripts/"*.sh
 rm -rf "$tmp"
+
+echo "==> Setting up trackpad gestures (3-finger swipe left/right)..."
+if [ -f "$HOME/.config/eww/touchegg.conf" ]; then
+  mkdir -p "$HOME/.config/touchegg"
+  mv "$HOME/.config/eww/touchegg.conf" "$HOME/.config/touchegg/touchegg.conf"
+fi
+if command -v touchegg > /dev/null; then
+  sudo systemctl enable --now touchegg.service 2>/dev/null || true
+  # restart the user-session client so it picks up the new config
+  pkill -u "$(id -u)" -x touchegg 2>/dev/null || true
+  sleep 1
+  nohup touchegg > /dev/null 2>&1 &
+fi
 
 # Find the eww binary even if it isn't on PATH in this shell
 EWW=$(command -v eww || true)
@@ -36,5 +50,6 @@ echo "==> Starting sidebar..."
 sleep 1
 "$EWW" daemon
 sleep 1
-"$EWW" open sidebar
-echo "Done. Toggle with: eww open sidebar / eww close sidebar"
+"$HOME/.config/eww/scripts/panel.sh" show
+echo "Done. Swipe left with 3 fingers to show the sidebar, right to hide it."
+echo "Manual toggle: ~/.config/eww/scripts/panel.sh toggle"
