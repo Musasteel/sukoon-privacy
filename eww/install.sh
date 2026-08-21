@@ -52,6 +52,16 @@ if [ -z "$EWW" ]; then
   exit 1
 fi
 
+echo "==> Enabling autostart at login..."
+mkdir -p "$HOME/.config/autostart"
+cat > "$HOME/.config/autostart/sukoon-sidebar.desktop" <<AUTOEOF
+[Desktop Entry]
+Type=Application
+Name=Sukoon Sidebar
+Exec=sh -lc "sleep 2; $HOME/.config/eww/scripts/panel.sh show"
+X-GNOME-Autostart-enabled=true
+AUTOEOF
+
 echo "==> Starting sidebar..."
 "$EWW" kill 2>/dev/null || true
 sleep 1

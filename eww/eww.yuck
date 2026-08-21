@@ -14,7 +14,8 @@
 (defwindow sidebar
   :monitor 0
   :geometry (geometry :x "16px" :y "42px" :width "360px" :height "92%" :anchor "top right")
-  :wm-ignore true
+  :windowtype "dock"
+  :reserve (struts :distance "392px" :side "right")
   (revealer :transition "slideleft" :duration "350ms" :reveal reveal
     (sidebar)))
 
