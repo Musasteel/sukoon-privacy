@@ -12,8 +12,7 @@
 (defwindow sidebar
   :monitor 0
   :geometry (geometry :x "16px" :y "16px" :width "360px" :height "94%" :anchor "top right")
-  :windowtype "toolbar"
-  :stacking "bg"
+  :wm-ignore true
   (sidebar))
 
 (defwidget sidebar []
