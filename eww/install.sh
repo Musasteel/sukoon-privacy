@@ -8,6 +8,13 @@ REPO=https://github.com/Musasteel/sukoon-privacy
 
 echo "==> Installing helper packages (sudo password may be asked)..."
 sudo apt-get install -y playerctl brightnessctl pamixer fonts-font-awesome curl git
+# Ubuntu's archive carries the obsolete touchegg 1.x (no swipe support on
+# modern libinput); touchegg 2.x lives in the developer's official PPA.
+if ! systemctl list-unit-files 2>/dev/null | grep -q '^touchegg'; then
+  echo "==> Adding the official touchegg PPA (2.x)..."
+  sudo add-apt-repository -y ppa:touchegg/stable || true
+  sudo apt-get update || true
+fi
 sudo apt-get install -y touchegg || echo "WARN: touchegg unavailable; trackpad gestures will not work"
 fc-cache -f > /dev/null 2>&1 || true
 
