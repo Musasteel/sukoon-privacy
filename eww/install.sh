@@ -55,6 +55,13 @@ fi
 # undo the earlier dash-to-dock panel-mode experiment (user's dock is not dash-to-dock)
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false 2>/dev/null || true
 
+if [ -f "$HOME/.config/eww/wallpaper.png" ]; then
+  echo "==> Setting the arc wallpaper (revert anytime in Settings > Appearance)..."
+  gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.config/eww/wallpaper.png" 2>/dev/null || true
+  gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.config/eww/wallpaper.png" 2>/dev/null || true
+  gsettings set org.gnome.desktop.background picture-options "zoom" 2>/dev/null || true
+fi
+
 echo "==> Enabling autostart at login..."
 mkdir -p "$HOME/.config/autostart"
 cat > "$HOME/.config/autostart/sukoon-sidebar.desktop" <<AUTOEOF

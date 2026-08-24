@@ -19,7 +19,7 @@
     (sidebar)))
 
 (defwidget sidebar []
-  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 14
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 18
     (power-row)
     (quick-settings)
     (sliders)
@@ -30,9 +30,9 @@
 ;; ── top row: settings / lock / logout / power ──────────────────────
 (defwidget power-row []
   (box :class "card" :orientation "h" :space-evenly true :spacing 10
-    (button :class "circle icon" :onclick "gnome-control-center > /dev/null 2>&1 &" "")
+    (button :class "circle icon" :onclick "gnome-control-center > /dev/null 2>&1 &" "")
     (button :class "circle icon" :onclick "loginctl lock-session" "")
-    (button :class "circle icon" :onclick "gnome-session-quit --logout --no-prompt" "")
+    (button :class "circle icon" :onclick "gnome-session-quit --logout --no-prompt" "")
     (button :class "circle icon" :onclick "gnome-session-quit --power-off" "")))
 
 ;; ── quick settings chips ───────────────────────────────────────────

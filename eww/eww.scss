@@ -1,37 +1,37 @@
 * {
   all: unset;
-  font-family: "Ubuntu", "Cantarell", sans-serif;
-  font-size: 14px;
-  color: #e9ebf4;
+  font-family: "SF Pro Display", "Inter", "Ubuntu", "Cantarell", sans-serif;
+  font-size: 15px;
+  color: #eceef6;
 }
 
 .sidebar { margin: 2px; }
 
 .card {
-  background-color: rgba(11, 13, 20, 0.96);
-  border-radius: 24px;
-  padding: 16px 18px;
+  background-color: rgba(10, 12, 18, 0.97);
+  border-radius: 26px;
+  padding: 18px 20px;
 }
 
 .icon { font-family: "FontAwesome"; }
-.dim  { color: #9aa0b4; }
-.title { font-size: 16px; font-weight: 700; }
+.dim  { color: #a6abbd; }
+.title { font-size: 17px; font-weight: 700; }
 
 .circle {
-  background-color: #191d29;
+  background-color: #1b1f2c;
   border-radius: 999px;
-  padding: 12px 0;
-  font-size: 16px;
+  padding: 14px 0;
+  font-size: 17px;
 }
-.circle:hover { background-color: #252b3d; }
+.circle:hover { background-color: #29304a; }
 
 .chip {
-  background-color: #191d29;
+  background-color: #1b1f2c;
   border-radius: 999px;
-  padding: 10px 14px;
+  padding: 12px 16px;
 }
-.chip:hover { background-color: #252b3d; }
-.chip.on { background-color: #3d64f4; }
+.chip:hover { background-color: #29304a; }
+.chip.on { background-color: #3d63f2; }
 .chip.on:hover { background-color: #5377f6; }
 .chip.on label { color: #ffffff; }
 
@@ -41,56 +41,56 @@
   min-height: 8px;
 }
 .slider highlight {
-  background-color: #c6cad8;
+  background-color: #cdd1de;
   border-radius: 999px;
 }
 .slider slider {
   background-color: #ffffff;
   border-radius: 999px;
-  min-height: 18px;
-  min-width: 18px;
+  min-height: 20px;
+  min-width: 20px;
 }
 
 .meter trough {
-  background-color: #262b3d;
+  background-color: #252a3c;
   border-radius: 999px;
-  min-height: 12px;
+  min-height: 14px;
 }
 .meter progress {
-  background-color: #3d64f4;
+  background-color: #3d63f2;
   border-radius: 999px;
-  min-height: 12px;
+  min-height: 14px;
 }
 
-.meter-icon { min-width: 24px; font-size: 16px; }
-.pct { min-width: 46px; color: #c9cddb; }
+.meter-icon { min-width: 26px; font-size: 17px; }
+.pct { min-width: 52px; color: #d3d7e3; }
 
 .art {
   background-size: cover;
   background-position: center;
-  background-color: #191d29;
-  border-radius: 16px;
-  min-width: 64px;
-  min-height: 64px;
+  background-color: #1b1f2c;
+  border-radius: 18px;
+  min-width: 68px;
+  min-height: 68px;
 }
-.art.small { min-width: 40px; min-height: 40px; border-radius: 12px; }
+.art.small { min-width: 42px; min-height: 42px; border-radius: 13px; }
 
-.mbtn { font-size: 16px; padding: 6px; }
+.mbtn { font-size: 17px; padding: 6px; }
 .mbtn:hover { color: #ffffff; }
 
 .notif {
-  background-color: #161a26;
-  border-radius: 16px;
-  padding: 12px;
+  background-color: #151928;
+  border-radius: 18px;
+  padding: 12px 14px;
 }
 .n-title { font-weight: 700; }
 .n-body { font-size: 13px; }
 .n-icon {
-  background-color: #262b3d;
-  border-radius: 12px;
+  background-color: #252a3c;
+  border-radius: 13px;
   padding: 10px 12px;
-  font-size: 16px;
+  font-size: 17px;
 }
 
-.clear { color: #c9cddb; }
+.clear { color: #d3d7e3; }
 .clear:hover { color: #ffffff; }
