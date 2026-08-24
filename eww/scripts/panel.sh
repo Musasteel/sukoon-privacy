@@ -11,9 +11,14 @@ fi
 
 case "$1" in
   show)
+    "$EWW" update reveal=false 2>/dev/null || true
     "$EWW" open sidebar 2>/dev/null || true
+    sleep 0.08
+    "$EWW" update reveal=true
     ;;
   hide)
+    "$EWW" update reveal=false 2>/dev/null || true
+    sleep 0.35
     "$EWW" close sidebar 2>/dev/null || true
     ;;
   toggle)

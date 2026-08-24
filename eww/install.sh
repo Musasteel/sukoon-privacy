@@ -52,8 +52,8 @@ if [ -z "$EWW" ]; then
   exit 1
 fi
 
-echo "==> Making the app dock full-width so the sidebar cannot un-center it..."
-gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true 2>/dev/null || true
+# undo the earlier dash-to-dock panel-mode experiment (user's dock is not dash-to-dock)
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false 2>/dev/null || true
 
 echo "==> Enabling autostart at login..."
 mkdir -p "$HOME/.config/autostart"

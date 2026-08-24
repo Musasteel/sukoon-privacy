@@ -9,12 +9,14 @@
   :initial '{"status":"Stopped","title":"Nothing playing","artist":"","art":"","pvol":100}'
   "./scripts/music.sh")
 
+(defvar reveal false)
+
 (defwindow sidebar
   :monitor 0
   :geometry (geometry :x "16px" :y "42px" :width "360px" :height "92%" :anchor "top right")
-  :windowtype "dock"
-  :reserve (struts :distance "392px" :side "right")
-  (sidebar))
+  :wm-ignore true
+  (revealer :transition "slideleft" :duration "300ms" :reveal reveal
+    (sidebar)))
 
 (defwidget sidebar []
   (box :class "sidebar" :orientation "v" :space-evenly false :spacing 14
