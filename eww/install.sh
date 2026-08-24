@@ -64,6 +64,38 @@ if [ -f "$HOME/.config/eww/wallpaper.png" ]; then
   gsettings set org.gnome.desktop.background picture-options "zoom" 2>/dev/null || true
 fi
 
+echo "==> Tuning Forge tiling (skipped if Forge is not installed)..."
+FORGE_DIR=""
+for d in "$HOME"/.local/share/gnome-shell/extensions/forge@* /usr/share/gnome-shell/extensions/forge@*; do
+  [ -d "$d" ] && FORGE_DIR=$d && break
+done
+if [ -n "$FORGE_DIR" ]; then
+  FORGE_UUID=$(basename "$FORGE_DIR")
+  if [ -d "$FORGE_DIR/schemas" ]; then
+    glib-compile-schemas "$FORGE_DIR/schemas" 2>/dev/null || true
+    fset() { gsettings --schemadir "$FORGE_DIR/schemas" set org.gnome.shell.extensions.forge "$@" 2>/dev/null || true; }
+    fset window-gap-size 8            # gap pixels = size x increment
+    fset window-gap-size-increment 1
+    fset window-gap-hidden-on-single false
+    fset focus-border-toggle true
+    fset focus-border-size 2
+    fset focus-border-color 'rgba(61, 99, 242, 1)'
+    fset split-border-toggle false
+    fset preview-hint-enabled true
+  fi
+  if [ -f "$HOME/.config/eww/forge.css" ]; then
+    mkdir -p "$HOME/.config/forge/stylesheet/forge"
+    mv "$HOME/.config/eww/forge.css" "$HOME/.config/forge/stylesheet/forge/stylesheet.css"
+    fset css-updated "$(date +%s)" 2>/dev/null || true
+  fi
+  # reload the extension so the new style and gaps apply immediately
+  gnome-extensions disable "$FORGE_UUID" 2>/dev/null || true
+  sleep 1
+  gnome-extensions enable "$FORGE_UUID" 2>/dev/null || true
+else
+  rm -f "$HOME/.config/eww/forge.css"
+fi
+
 echo "==> Enabling autostart at login..."
 mkdir -p "$HOME/.config/autostart"
 cat > "$HOME/.config/autostart/sukoon-sidebar.desktop" <<AUTOEOF
