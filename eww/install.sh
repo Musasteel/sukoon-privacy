@@ -57,6 +57,8 @@ gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false 2>/dev
 
 if [ -f "$HOME/.config/eww/wallpaper.png" ]; then
   echo "==> Setting the arc wallpaper (revert anytime in Settings > Appearance)..."
+  # clear first so GNOME reloads the file even when the path is unchanged
+  gsettings set org.gnome.desktop.background picture-uri "" 2>/dev/null || true
   gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.config/eww/wallpaper.png" 2>/dev/null || true
   gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.config/eww/wallpaper.png" 2>/dev/null || true
   gsettings set org.gnome.desktop.background picture-options "zoom" 2>/dev/null || true
