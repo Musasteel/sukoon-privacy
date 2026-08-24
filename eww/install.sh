@@ -96,6 +96,14 @@ else
   rm -f "$HOME/.config/eww/forge.css"
 fi
 
+echo "==> Making the terminal translucent..."
+TP=$(gsettings get org.gnome.Terminal.ProfilesList default 2>/dev/null | tr -d "'")
+if [ -n "$TP" ]; then
+  TS="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$TP/"
+  gsettings set "$TS" use-transparent-background true 2>/dev/null || true
+  gsettings set "$TS" background-transparency-percent 25 2>/dev/null || true
+fi
+
 echo "==> Enabling autostart at login..."
 mkdir -p "$HOME/.config/autostart"
 cat > "$HOME/.config/autostart/sukoon-sidebar.desktop" <<AUTOEOF
