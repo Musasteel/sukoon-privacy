@@ -52,6 +52,9 @@ if [ -z "$EWW" ]; then
   exit 1
 fi
 
+echo "==> Making the app dock full-width so the sidebar cannot un-center it..."
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true 2>/dev/null || true
+
 echo "==> Enabling autostart at login..."
 mkdir -p "$HOME/.config/autostart"
 cat > "$HOME/.config/autostart/sukoon-sidebar.desktop" <<AUTOEOF
