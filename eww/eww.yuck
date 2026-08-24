@@ -15,7 +15,7 @@
   :monitor 0
   :geometry (geometry :x "16px" :y "42px" :width "360px" :height "92%" :anchor "top right")
   :wm-ignore true
-  (revealer :transition "slideleft" :duration "300ms" :reveal reveal
+  (revealer :transition "crossfade" :duration "200ms" :reveal reveal
     (sidebar)))
 
 (defwidget sidebar []

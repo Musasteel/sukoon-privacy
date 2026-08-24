@@ -18,7 +18,7 @@ case "$1" in
     ;;
   hide)
     "$EWW" update reveal=false 2>/dev/null || true
-    sleep 0.35
+    sleep 0.25
     "$EWW" close sidebar 2>/dev/null || true
     ;;
   toggle)
