@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Show/hide the sidebar with a slide animation. Used by touchegg gestures.
+# Show/hide the sidebar. Used by touchegg gestures.
 
 EWW=$(command -v eww || true)
 if [ -z "$EWW" ]; then
@@ -11,14 +11,9 @@ fi
 
 case "$1" in
   show)
-    "$EWW" update reveal=false 2>/dev/null || true
     "$EWW" open sidebar 2>/dev/null || true
-    sleep 0.08
-    "$EWW" update reveal=true
     ;;
   hide)
-    "$EWW" update reveal=false 2>/dev/null || true
-    sleep 0.4
     "$EWW" close sidebar 2>/dev/null || true
     ;;
   toggle)
